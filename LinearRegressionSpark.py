@@ -23,8 +23,18 @@ print (X_test)
 
 import matplotlib.pyplot as plt
 plt.figure(1)
+plt.subplot('211')
 plt.scatter(X_train,Y_train)
 plt.title('Training data')
+plt.xlabel(data.columns[1])
+plt.ylabel(data.columns[60])
+plt.grid(True)
+
+plt.subplot('212')
+plt.scatter(X_test,Y_test)
+plt.title('Testing data')
+plt.xlabel(data.columns[1])
+plt.ylabel(data.columns[60])
 plt.grid(True)
 
 plt.show()
