@@ -6,15 +6,18 @@ pyensae.download_data("OnlineNewsPopularity.zip", url="https://archive.ics.uci.e
 import pandas
 data = pandas.read_csv("OnlineNewsPopularity/OnlineNewsPopularity.csv")
 
+#list of the feature column's names
+dependent_column = data.ix[:,1]
+shares_column = data.ix[:,60]
+
 #spliting data to train and test
 from sklearn.model_selection import train_test_split
-train, test = train_test_split(data, test_size=0.2)
+X_train, X_test, Y_train, Y_test = train_test_split(dependent_column,shares_column, test_size=0.01)
 
 #print train  and test data
 print("TRAIN DATA")
-print (train)
+print (X_train)
 
-print("\n\nTEST DATA")
-print (test)
+print("TRAIN DATA")
+print (X_test)
 
-spark.stop
