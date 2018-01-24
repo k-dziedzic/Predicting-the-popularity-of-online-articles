@@ -1,29 +1,20 @@
+#download data OnlineNewsPopularity
 import pyensae
-from pyspark.sql import SparkSession
-from pyspark.shell import sqlContext
-
-
-# download data OnlineNewsPopularity
 pyensae.download_data("OnlineNewsPopularity.zip", url="https://archive.ics.uci.edu/ml/machine-learning-databases/00332/")
 
-# create Spark Session
-if __name__ == "__main__":spark = SparkSession.builder.appName("OnlineNewsPopularity").getOrCreate()
+#import data from file .csv
+import pandas
+data = pandas.read_csv("OnlineNewsPopularity/OnlineNewsPopularity.csv")
 
-# read data from .csv file
-data = sqlContext.read.format("csv").option("header", "true").option("inferSchema", "true").load(
-    "OnlineNewsPopularity/OnlineNewsPopularity.csv")
+#spliting data to train and test
+from sklearn.model_selection import train_test_split
+train, test = train_test_split(data, test_size=0.2)
 
-# show data table
-data.show()
+#print train  and test data
+print("TRAIN DATA")
+print (train)
 
-# show columns belongs to table
-print(data.columns)
+print("\n\nTEST DATA")
+print (test)
 
-# show schema with format of column
-data.printSchema()
-
-# show  2x10 table with data from following columns
-data.select(' shares',' n_tokens_title').show(10)
-
-# show describe table
-data.describe().show()
+spark.stop
