@@ -1,4 +1,4 @@
-from pyspark import Row
+from pyspark import Row, SparkContext
 from pyspark.shell import spark, sqlContext, sc
 
 #download data OnlineNewsPopularity
@@ -13,13 +13,9 @@ if __name__ == "__main__":
 data = sqlContext.read.format("csv").option("header", "true").option("inferSchema", "true").load(
     "OnlineNewsPopularity/OnlineNewsPopularity.csv")
 
-data=sc.textFile("OnlineNewsPopularity/OnlineNewsPopularity.csv").map(lambda line: line.split(", ")).filter(lambda line: len(line)>1)
+data.show()
 
-data.collect()
-
-print(data.first)
-print("\n")
-print(data.top(2))
+# print(data.columns)
 
 spark.stop
 
