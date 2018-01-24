@@ -21,3 +21,11 @@ print (X_train)
 print("TRAIN DATA")
 print (X_test)
 
+import matplotlib.pyplot as plt
+plt.figure(1)
+plt.scatter(X_train,Y_train)
+plt.title('Training data')
+plt.grid(True)
+
+plt.show()
+
