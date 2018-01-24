@@ -99,6 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# myfile
 *.zip
 /OnlineNewsPopularity
 /metastore_db
+
