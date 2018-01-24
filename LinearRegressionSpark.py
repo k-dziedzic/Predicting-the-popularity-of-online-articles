@@ -37,5 +37,7 @@ plt.xlabel(data.columns[1])
 plt.ylabel(data.columns[60])
 plt.grid(True)
 
+plt.subplots_adjust(hspace=0.40)
+
 plt.show()
 
