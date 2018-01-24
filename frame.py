@@ -31,7 +31,22 @@ input_data=data.rdd.map(lambda x: (x[0], DenseVector(x[1:])))
 # Replace `data` with the new DataFrame
 data=spark.createDataFrame(input_data, ["label", "features"])
 
-data.show()
+# data.show()
+
+# Import `StandardScaler`
+from pyspark.ml.feature import StandardScaler
+
+# Initialize the `standardScaler`
+standardScaler=StandardScaler(inputCol="features", outputCol="features_scaled")
+
+# Fit the DataFrame to the scaler
+scaler=standardScaler.fit(data)
+
+# Transform the data in `df` with the scaler
+scaled_data=scaler.transform(data)
+
+# Inspect the result
+print(scaled_data.take(2))
 
 spark.stop
 
