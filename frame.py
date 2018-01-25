@@ -120,5 +120,58 @@ print(linearModel.summary.rootMeanSquaredError)
 print("\nR2")
 print(linearModel.summary.r2)
 
+# import numpy as np
+# import matplotlib.pyplot as plt
+#
+#
+# tab1=np.array(train_data.select('features').collect())
+# tab2=np.array(train_data.select('label').collect())
+#
+# print(train_data.printSchema)
+# print (tab2)
+#
+# # view reliability diagram
+# plt.figure(1)
+# plt.subplot('221')
+# plt.scatter(tab1,tab2)
+# plt.title('Training data')
+# plt.xlabel(train_data.columns[2])
+# plt.ylabel(train_data.columns[0])
+# plt.grid(True)
+#
+# tab1=np.array(test_data.select('features_scaled').collect())
+# tab2=np.array(test_data.select('label').collect())
+#
+# plt.subplot('222')
+# plt.scatter(tab1,tab2)
+# plt.title('Testing data')
+# plt.xlabel(test_data.columns[2])
+# plt.ylabel(test_data.columns[0])
+# plt.grid(True)
+#
+# tab1=np.array(predicted.select('features_scaled').collect())
+# tab2=np.array(predicted.select('label').collect())
+# tab3=np.array(predicted.select('prediction').collect())
+# tab1=tab1.reshape(7905,1)
+#
+# plt.subplot('223')
+# plt.scatter(tab1, tab2)
+# plt.plot(tab1 ,tab2, color='green', linewidth=3)
+# plt.title('Learned linear regression')
+# plt.xlabel(train_data.columns[2])
+# plt.ylabel(train_data.columns[0])
+# plt.grid()
+#
+# plt.subplot('223')
+# plt.scatter(tab3, tab4)
+# plt.plot(tab4, tab5, color='green', linewidth=3)
+# plt.title('Learned linear regression')
+# plt.xlabel('x3')
+# plt.ylabel('target')
+# plt.grid()
+
+# plt.show()
+
+
 spark.stop
 
