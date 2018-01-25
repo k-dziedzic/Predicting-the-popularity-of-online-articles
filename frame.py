@@ -67,11 +67,34 @@ scaled_data=scaler.transform(data)
 # split the data into train and test sets
 train_data, test_data = scaled_data.randomSplit([.8,.2],seed=1234)
 
-print("TRAIN DATA")
-print(train_data.show(10))
+# print("TRAIN DATA")
+# print(train_data.show(10))
 # print(train_data[['features_scaled']].show())
-print("TEST DATA")
-print(test_data.show(10))
+# print("TEST DATA")
+# print(test_data.show(10))
+
+# import `LinearRegression`
+from pyspark.ml.regression import LinearRegression
+
+# initialize `lr`
+lr = LinearRegression(labelCol="label", maxIter=10, regParam=0.3, elasticNetParam=0.8)
+
+# fit the data to the model
+linearModel = lr.fit(train_data)
+
+# generate predictions
+predicted = linearModel.transform(test_data)
+
+# print(predicted.show(10))
+
+# extract the predictions and the "known" correct labels
+predictions = predicted.select("prediction").rdd.map(lambda x: x[0])
+labels = predicted.select("label").rdd.map(lambda x: x[0])
+
+# zip `predictions` and `labels` into a list
+predictionAndLabel = predictions.zip(labels).collect()
+
+print(predictionAndLabel)
 
 spark.stop
 
