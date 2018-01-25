@@ -94,7 +94,31 @@ labels = predicted.select("label").rdd.map(lambda x: x[0])
 # zip `predictions` and `labels` into a list
 predictionAndLabel = predictions.zip(labels).collect()
 
-print(predictionAndLabel)
+# print(predictionAndLabel)
+
+# zip `predictions` and `labels` into a list
+predictionAndLabel = predictions.zip(labels).collect()
+
+# print out first 5 instances of `predictionAndLabel`
+# print(predictionAndLabel[:5])
+
+# coefficients for the model
+print("Coefficients")
+print(linearModel.coefficients)
+
+# intercept for the model
+print("\nIntercept")
+print(linearModel.intercept)
+
+# get the RMSE
+# how much error there is between two datasets comparing; smaller is better
+print("\nRMSE")
+print(linearModel.summary.rootMeanSquaredError)
+
+# get the R2
+# how close the data are to the fitted regression line; 0-the worst, 1-the best
+print("\nR2")
+print(linearModel.summary.r2)
 
 spark.stop
 
