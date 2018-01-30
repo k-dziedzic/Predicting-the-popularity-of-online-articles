@@ -178,7 +178,7 @@ leg = plt.legend()
 leg_lines = leg.get_lines()
 leg_texts = leg.get_texts()
 plt.title('Accuracy with change train data')
-plt.xlabel("% test size")
+plt.xlabel("% train size")
 plt.ylabel("Accuracy")
 plt.grid(True)
 
@@ -191,9 +191,11 @@ leg = plt.legend()
 leg_lines = leg.get_lines()
 leg_texts = leg.get_texts()
 plt.title('Accuracy with change train data')
-plt.xlabel("% test size")
+plt.xlabel("% train size")
 plt.ylabel("Accuracy")
 plt.grid(True)
+
+plt.savefig('chart/AccuracyChangeWithTrainData.png')
 
 plt.figure(2)
 plt.subplots_adjust(hspace=0.3)
@@ -205,9 +207,12 @@ leg = plt.legend()
 leg_lines = leg.get_lines()
 leg_texts = leg.get_texts()
 plt.title('Time with change train data')
-plt.xlabel("% test size")
+plt.xlabel("% train size")
 plt.ylabel("Time")
 plt.grid(True)
+
+plt.savefig('chart/TimeChangeWithTrainData.png')
+
 
 # CHANGE TEST DATA
 
@@ -292,6 +297,8 @@ plt.xlabel("% test size")
 plt.ylabel("Accuracy")
 plt.grid(True)
 
+plt.savefig('chart/AccuracyChangeWithTestData.png')
+
 plt.figure(4)
 plt.subplots_adjust(hspace=0.3)
 plt.plot(list1, list3, label="Linear Regression")
@@ -305,6 +312,8 @@ plt.title('Time with change test data')
 plt.xlabel("% test size")
 plt.ylabel("Time")
 plt.grid(True)
+
+plt.savefig('chart/TimeChangeWithTestData.png')
 
 plt.show()
 
