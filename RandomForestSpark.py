@@ -56,7 +56,7 @@ if __name__ == "__main__":
                ' kw_min_min', ' kw_max_min')
 
     # Define the `input_data`
-    input_data = data.rdd.map(lambda x: (x[0], DenseVector(x[1:])))
+    input_data = data.rdd.map(lambda x: (1 if x[0] < 2000 else 0, DenseVector(x[1:])))
 
     # Replace `data` with the new DataFrame
     data = spark.createDataFrame(input_data, ["label", "features"])
@@ -91,14 +91,11 @@ if __name__ == "__main__":
     predictions = model.transform(testData)
 
     # Select example rows to display.
-    predictions.select("predictedLabel", "label", "features").show(5)
+    predictions.select("predictedLabel", "label", "features").show(100)
 
     # Select (prediction, true label) and compute test error
     evaluator = MulticlassClassificationEvaluator(labelCol="indexedLabel", predictionCol="prediction", metricName="accuracy")
     accuracy = evaluator.evaluate(predictions)
     print("Test Error = %g" % (1.0 - accuracy))
-
-    rfModel = model.stages[2]
-    print(rfModel)  # summary only
 
 spark.stop
