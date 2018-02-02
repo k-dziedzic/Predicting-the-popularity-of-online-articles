@@ -15,9 +15,12 @@ pyensae.download_data("OnlineNewsPopularity.zip",
 if __name__ == "__main__":
     spark = SparkSession.builder.appName("OnlineNewsPopularity").getOrCreate()
 
-    data = sqlContext.read.format("csv").option("header", "true").option("inferSchema", "true").load(
-        "OnlineNewsPopularity/OnlineNewsPopularity.csv")
+    data = spark.read \
+        .options(header="true", inferSchema="true") \
+        .csv("OnlineNewsPopularity/OnlineNewsPopularity.csv")
 
+    print("Total number of rows: %d" % data.count())
+    
     def convertColumn(df, names, newType):
         for name in names:
             df = df.withColumn(name, df[name].cast(newType))
