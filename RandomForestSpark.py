@@ -20,7 +20,13 @@ if __name__ == "__main__":
         .csv("OnlineNewsPopularity/OnlineNewsPopularity.csv")
 
     print("Total number of rows: %d" % data.count())
-    
+
+    # remove index and redundant columns from dataframes
+    indexFeatures = ['url', 'timedelta']
+    redundantFeatures = ['is_weekend']
+
+    data = data.select(*[col for col in data.columns if col not in indexFeatures + redundantFeatures])
+
     def convertColumn(df, names, newType):
         for name in names:
             df = df.withColumn(name, df[name].cast(newType))
@@ -65,6 +71,9 @@ if __name__ == "__main__":
 
     # Split the data into training and test sets (30% held out for testing)
     (trainingData, testData) = data.randomSplit([0.7, 0.3])
+
+    print("Number of training set rows: %d" % trainingData.count())
+    print("Number of test set rows: %d" % testData.count())
 
     # Train a RandomForest model.
     rf = RandomForestClassifier(labelCol="indexedLabel", featuresCol="indexedFeatures", numTrees=10)
