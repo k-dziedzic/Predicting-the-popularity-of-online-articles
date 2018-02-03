@@ -14,6 +14,7 @@ pyensae.download_data("OnlineNewsPopularity.zip",
 
 if __name__ == "__main__":
     spark = SparkSession.builder.appName("OnlineNewsPopularity").getOrCreate()
+    spark.sparkContext.setLogLevel("ERROR")
 
     data = spark.read \
         .options(header="true", inferSchema="true") \
@@ -48,9 +49,8 @@ if __name__ == "__main__":
                ' title_subjectivity', ' title_sentiment_polarity', ' abs_title_subjectivity',
                ' abs_title_sentiment_polarity', ' shares']
 
-    # Conver the `df` columns to `FloatType()`
+    # Convert the `data` columns to `FloatType()`
     data = convertColumn(data, columns, FloatType())
-    data = data.select(columns).dropDuplicates()
 
     # Define the `input_data`
     input_data = data.rdd.map(lambda x: ('0' if int(x[-1]) < 2000.0 else '1', DenseVector(x[0:-1])))
@@ -67,8 +67,10 @@ if __name__ == "__main__":
     featureIndexer = VectorIndexer(inputCol="features", outputCol="indexedFeatures", maxCategories=4).fit(data)
 
     # Split the data into training and test sets (30% held out for testing)
-    (trainingData, testData) = data.randomSplit([0.7, 0.3])
+    (trainingData, testData) = data.randomSplit([0.7, 0.3], 13795)
 
+    trainingData.persist()
+    testData.persist()
     print("Number of training set rows: %d" % trainingData.count())
     print("Number of test set rows: %d" % testData.count())
 
